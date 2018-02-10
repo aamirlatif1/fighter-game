@@ -1,6 +1,7 @@
 package com.aamir.game;
 
 import com.aamir.game.exception.WeaponNotAvailableException;
+import com.aamir.game.model.Player;
 import com.aamir.game.model.Weapon;
 
 public class Fight {
@@ -29,6 +30,8 @@ public class Fight {
         }
         makeDamage(weapon, player, enemy);
         player.increaseExperience(weapon.getExperience());
+        if(player.getExperience() >= 10)
+            player.increaseLevel();
     }
 
     public Player getEnemy() {
@@ -39,9 +42,8 @@ public class Fight {
         return player;
     }
 
-    public void counterAttack(Weapon weapon) {
+    public void counterAttackWith(Weapon weapon) {
         makeDamage(weapon, enemy, player);
-
     }
 
     private void makeDamage(Weapon weapon, Player attacker, Player defender) {

@@ -2,6 +2,7 @@ package com.aamir.game;
 
 import com.aamir.game.exception.InsufficientCoinsException;
 import com.aamir.game.exception.WeaponNotAvailableException;
+import com.aamir.game.model.Player;
 import com.aamir.game.model.Weapon;
 import org.junit.Before;
 import org.junit.Test;
@@ -89,7 +90,7 @@ public class GameTest {
         game.purchaseWeapon(player, knife);
         Fight fight = new Fight(player);
         fight.start();
-        fight.counterAttack(knife);
+        fight.counterAttackWith(knife);
         assertEquals(90, fight.getPlayer().getHealth());
     }
 
@@ -103,5 +104,17 @@ public class GameTest {
         assertEquals(100, fight.getEnemy().getHealth());
         assertEquals(95, fight.getPlayer().getHealth());
     }
+
+    @Test
+    public void increaseLevelOfPlayer() throws Exception {
+        assertEquals(1, player.getCurrentLevel());
+        game.purchaseWeapon(player, knife);
+        Fight fight = new Fight(player);
+        fight.start();
+        for(int i = 0; i < 10; i++)
+            fight.attackWith(knife);
+        assertEquals(2, player.getCurrentLevel());
+    }
+
 
 }

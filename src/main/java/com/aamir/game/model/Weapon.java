@@ -9,10 +9,11 @@ public class Weapon {
     }
 
     private String name;
+    private int price;
     private int damage;
     private int defence;
-    private int price;
     private int experience;
+    private int level;
 
     public Weapon(String name, int price, int damage, int defence) {
         this.name = name;
@@ -20,6 +21,7 @@ public class Weapon {
         this.damage = damage;
         this.defence = defence;
         this.experience = (damage+defence) / 10;
+        level = 1;
     }
 
     public String getName() {
@@ -42,6 +44,10 @@ public class Weapon {
 
     public int getExperience() {
         return this.experience;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
     }
 
 

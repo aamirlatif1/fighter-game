@@ -1,4 +1,4 @@
-package com.aamir.game;
+package com.aamir.game.model;
 
 
 import com.aamir.game.model.Weapon;
@@ -13,11 +13,13 @@ public class Player {
     private List<Weapon> weapons;
     private boolean killed;
     private int experience;
+    private int currentLevel;
 
     public Player(String displayName) {
         this.displayName = displayName;
         health = 100;
         coins = 50;
+        currentLevel = 1;
     }
 
     public int getCoins() {
@@ -71,5 +73,33 @@ public class Player {
             }
         }
         return defenceWeapon;
+    }
+
+    public int getCurrentLevel() {
+        return this.currentLevel;
+    }
+
+    public void increaseLevel() {
+        currentLevel++;
+    }
+
+    public void setExperience(int experience) {
+        this.experience = experience;
+    }
+
+    public void setCurrentLevel(int currentLevel) {
+        this.currentLevel = currentLevel;
+    }
+
+    public void setHealth(int health) {
+        this.health = health;
+    }
+
+    public void setWeapons(List<Weapon> weapons) {
+        this.weapons = weapons;
+    }
+
+    public void setKilled(boolean killed) {
+        this.killed = killed;
     }
 }
