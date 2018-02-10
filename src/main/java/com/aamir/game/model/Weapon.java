@@ -1,0 +1,58 @@
+package com.aamir.game.model;
+
+public class Weapon {
+
+    public static  Weapon ZERO_DEFENCE_WEAPON;
+
+    static {
+        ZERO_DEFENCE_WEAPON = new Weapon("No Defence", 0, 0, 0);
+    }
+
+    private String name;
+    private int damage;
+    private int defence;
+    private int price;
+    private int experience;
+
+    public Weapon(String name, int price, int damage, int defence) {
+        this.name = name;
+        this.price = price;
+        this.damage = damage;
+        this.defence = defence;
+        this.experience = (damage+defence) / 10;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+
+    public int getDamage() {
+        return damage;
+    }
+
+    public int getDefence() {
+        return defence;
+    }
+
+
+    public int getPrice() {
+        return price;
+    }
+
+    public int getExperience() {
+        return this.experience;
+    }
+
+
+
+   /* @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Weapon weapon = (Weapon) o;
+        return name.equals(weapon.name);
+    }*/
+
+
+}
