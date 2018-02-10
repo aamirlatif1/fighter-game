@@ -55,4 +55,8 @@ public class Fight {
         if (attacker.isKilled() || defender.isKilled())
             finished = true;
     }
+
+    public void attackWithSelectedWeapon() {
+        attackWith(player.getSelectWeapon());
+    }
 }

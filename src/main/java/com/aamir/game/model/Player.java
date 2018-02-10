@@ -14,12 +14,14 @@ public class Player {
     private boolean killed;
     private int experience;
     private int currentLevel;
+    private int selectedWeaponIndex;
 
     public Player(String displayName) {
         this.displayName = displayName;
         health = 100;
         coins = 50;
         currentLevel = 1;
+        selectedWeaponIndex = 0;
     }
 
     public int getCoins() {
@@ -101,5 +103,9 @@ public class Player {
 
     public void setKilled(boolean killed) {
         this.killed = killed;
+    }
+
+    public Weapon getSelectWeapon() {
+        return weapons.get(selectedWeaponIndex);
     }
 }

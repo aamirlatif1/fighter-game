@@ -1,5 +1,7 @@
 package com.aamir.game;
 
+import com.aamir.game.cli.out.Logger;
+import com.aamir.game.cli.out.LoggerFactory;
 import com.aamir.game.exception.InsufficientCoinsException;
 import com.aamir.game.model.Level;
 import com.aamir.game.model.Player;
@@ -12,6 +14,8 @@ import static com.aamir.game.util.Constants.WEAPONS_FILE_PATH;
 
 
 public class Game {
+
+    private static Logger logger = LoggerFactory.getLogger();
 
     private List<Weapon> weapons;
     private List<Player> opponents;
@@ -46,4 +50,12 @@ public class Game {
         player.addWeapon(weapon);
     }
 
+    public void start() {
+//        loadInventory();
+        logger.log("Naw game Started");
+    }
+
+    public void loadGameState() {
+        logger.log("Game has been loaded");
+    }
 }
