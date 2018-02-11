@@ -2,11 +2,13 @@ package com.aamir.game.model;
 
 public class Level {
     private int number;
-    private int exerienceRequired;
+    private int experienceRequired;
+    private int availableCoins;
 
-    public Level(int number, int exerienceRequired) {
+    public Level(int number, int experienceRequired, int availableCoins) {
         this.number = number;
-        this.exerienceRequired = exerienceRequired;
+        this.experienceRequired = experienceRequired;
+        this.availableCoins = availableCoins;
     }
 
     public int getNumber() {
@@ -17,11 +19,19 @@ public class Level {
         this.number = number;
     }
 
-    public int getExerienceRequired() {
-        return exerienceRequired;
+    public int getExperienceRequired() {
+        return experienceRequired;
     }
 
-    public void setExerienceRequired(int exerienceRequired) {
-        this.exerienceRequired = exerienceRequired;
+    public void setExperienceRequired(int experienceRequired) {
+        this.experienceRequired = experienceRequired;
+    }
+
+    public int getAvailableCoins() {
+        return availableCoins;
+    }
+
+    public void setAvailableCoins(int availableCoins) {
+        this.availableCoins = availableCoins;
     }
 }

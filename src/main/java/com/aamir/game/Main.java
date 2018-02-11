@@ -1,9 +1,8 @@
 package com.aamir.game;
 
-import com.aamir.game.cli.CommandLineInputService;
+import com.aamir.game.cli.command.CommandLineInputService;
 import com.aamir.game.cli.out.Logger;
 import com.aamir.game.cli.out.LoggerFactory;
-import com.aamir.game.cli.command.UserCommand;
 
 import java.util.Scanner;
 
@@ -13,7 +12,7 @@ public class Main {
     static CommandLineInputService cliService = new CommandLineInputService();
     public static void displayCommands(){
         int i = 1;
-        for (UserCommand command : cliService.getCommands()) {
+        for (String  command : cliService.getCommandMessages()) {
             logger.log(String.format("%d - %s", i++, command));
         }
     }

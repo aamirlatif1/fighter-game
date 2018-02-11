@@ -6,6 +6,7 @@ import java.util.List;
  * Parse String data to list of objects
  * @param <T>
  */
+@FunctionalInterface
 public interface Parser<T> {
 
     String DELIMITER = ",";

@@ -21,7 +21,7 @@ public class Weapon {
         this.damage = damage;
         this.defence = defence;
         this.experience = (damage+defence) / 10;
-        level = 1;
+        this.level = 1;
     }
 
     public String getName() {
@@ -48,6 +48,10 @@ public class Weapon {
 
     public void setLevel(int level) {
         this.level = level;
+    }
+
+    public int getLevel() {
+        return level;
     }
 
 
