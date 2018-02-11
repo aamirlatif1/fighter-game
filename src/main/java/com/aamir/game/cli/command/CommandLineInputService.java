@@ -10,7 +10,7 @@ public class CommandLineInputService {
 
     Game game = new Game();
     private List<String> messages = new ArrayList<>();
-    private List<UserCommand> commands = new ArrayList<>();
+    private List<Command> commands = new ArrayList<>();
     public void getMenueList(){
 
     }
@@ -27,7 +27,7 @@ public class CommandLineInputService {
                 addCommand(() -> game.purchaseWeapon(weapon.getLevel()+1), weapon.getName());
     }
 
-    public void addCommand(UserCommand command, String message){
+    public void addCommand(Command command, String message){
         commands.add(command);
         messages.add(message);
     }

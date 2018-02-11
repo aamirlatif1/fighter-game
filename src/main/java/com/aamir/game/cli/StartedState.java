@@ -11,22 +11,12 @@ public class StartedState implements State {
     }
 
     @Override
-    public void startGame() {
-
-    }
-
-    @Override
-    public void loadGame() {
-
-    }
-
-    @Override
     public void purchaseWeapon() {
-
+        game.setState(game.getPurchaseWeaponState());
     }
 
     @Override
     public void startFight() {
-
+        game.setState(game.getFightState());
     }
 }

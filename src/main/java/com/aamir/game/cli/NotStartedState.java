@@ -12,7 +12,7 @@ public class NotStartedState implements State {
 
     @Override
     public void startGame() {
-
+        game.setState(game.getStartedSate());
     }
 
     @Override

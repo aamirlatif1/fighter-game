@@ -1,7 +1,6 @@
 package com.aamir.game;
 
-import com.aamir.game.cli.NotStartedState;
-import com.aamir.game.cli.State;
+import com.aamir.game.cli.*;
 import com.aamir.game.cli.out.Logger;
 import com.aamir.game.cli.out.LoggerFactory;
 import com.aamir.game.exception.InsufficientCoinsException;
@@ -22,10 +21,18 @@ public class Game {
     private List<Player> opponents;
     private List<Level> levels;
     private Player player;
-    private State currentState;
+    private State state;
+    private State notStartedState;
+    private State startedSate;
+    private State purchaseWeaponState;
+    private State fightState;
 
     public Game() {
-        currentState = new NotStartedState(this);
+        notStartedState = new NotStartedState(this);
+        startedSate = new StartedState(this);
+        purchaseWeaponState = new PurchaseWeaponState(this);
+        fightState = new FightState(this);
+        state = new NotStartedState(this);
     }
 
     private void loadMetadata(){
@@ -76,5 +83,29 @@ public class Game {
 
     public Player getPlayer() {
         return player;
+    }
+
+    public State getState() {
+        return state;
+    }
+
+    public State getNotStartedState() {
+        return notStartedState;
+    }
+
+    public State getStartedSate() {
+        return startedSate;
+    }
+
+    public State getPurchaseWeaponState() {
+        return purchaseWeaponState;
+    }
+
+    public State getFightState() {
+        return fightState;
+    }
+
+    public void setState(State state) {
+        this.state = state;
     }
 }

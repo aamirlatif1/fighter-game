@@ -6,6 +6,10 @@ public class FightState implements State {
 
     private Game game;
 
+    public FightState(Game game) {
+        this.game = game;
+    }
+
     @Override
     public void startGame() {
 
@@ -16,13 +20,4 @@ public class FightState implements State {
 
     }
 
-    @Override
-    public void purchaseWeapon() {
-
-    }
-
-    @Override
-    public void startFight() {
-
-    }
 }
