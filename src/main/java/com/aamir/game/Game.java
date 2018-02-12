@@ -1,6 +1,7 @@
 package com.aamir.game;
 
 import com.aamir.game.cli.*;
+import com.aamir.game.cli.command.MacroCommand;
 import com.aamir.game.cli.out.Logger;
 import com.aamir.game.cli.out.LoggerFactory;
 import com.aamir.game.exception.InsufficientCoinsException;
@@ -10,6 +11,7 @@ import com.aamir.game.model.Weapon;
 import com.aamir.game.util.*;
 
 import java.util.List;
+import java.util.Scanner;
 
 import static com.aamir.game.util.Constants.WEAPONS_FILE_PATH;
 
@@ -26,6 +28,8 @@ public class Game {
     private State startedSate;
     private State purchaseWeaponState;
     private State fightState;
+    private MacroCommand macroCommand;
+    private Fight fight;
 
     public Game() {
         notStartedState = new NotStartedState(this);
@@ -33,6 +37,8 @@ public class Game {
         purchaseWeaponState = new PurchaseWeaponState(this);
         fightState = new FightState(this);
         state = new NotStartedState(this);
+        macroCommand = new MacroCommand(this);
+        macroCommand.fillGameStartCommands();
     }
 
     private void loadMetadata(){
@@ -70,6 +76,13 @@ public class Game {
 
     public void start() {
         loadMetadata();
+        Scanner scanner = new Scanner(System.in);
+        logger.log("Enter player name : ");
+        String name = scanner.next();
+        player = new Player(name);
+        // Knife is given as default weapon
+        player.addWeapon(weapons.get(0));
+        state.startGame();
         logger.log("Naw game Started");
     }
 
@@ -107,5 +120,40 @@ public class Game {
 
     public void setState(State state) {
         this.state = state;
+    }
+
+    public void displayCommands(){
+        int i = 1;
+        for (String  command : macroCommand.getCommandMessages()) {
+            logger.log(String.format("%d - %s", i++, command));
+        }
+    }
+
+    public void executeCommand(int commandIndex) {
+        macroCommand.excuteCommand(commandIndex);
+    }
+
+    public void startFight() {
+        fight = new Fight(player);
+        state.startFight();
+        logger.log("Fight Started");
+    }
+
+    public void purchaseWeaponState() {
+        state.purchaseWeapon();
+    }
+
+
+    public MacroCommand getMacroCommand() {
+        return macroCommand;
+    }
+
+    public Fight getFight() {
+        return fight;
+    }
+
+    public void changeWeaponState() {
+        logger.log("Change weapon");
+
     }
 }

@@ -1,16 +1,19 @@
 package com.aamir.game.cli.command;
 
-import com.aamir.game.Fight;
+import com.aamir.game.Game;
 
 public class AttackOpponentCommand implements Command {
-    private Fight fight;
+    private Game game;
 
-    public AttackOpponentCommand(Fight fight) {
-        this.fight = fight;
+    public AttackOpponentCommand(Game game) {
+        this.game = game;
     }
 
     @Override
     public void execute() {
-        fight.attackWithSelectedWeapon();
+        game.getFight().attackWithSelectedWeapon();
+        if(game.getFight().finished()){
+            game.getState().startGame();
+        }
     }
 }

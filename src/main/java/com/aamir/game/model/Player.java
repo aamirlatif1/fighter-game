@@ -61,7 +61,7 @@ public class Player {
     }
 
     public void addWeapon(Weapon weapon) {
-        if(weapons == null)
+        if (weapons == null)
             weapons = new ArrayList<Weapon>();
         weapons.add(weapon);
     }
@@ -107,5 +107,9 @@ public class Player {
 
     public Weapon getSelectWeapon() {
         return weapons.get(selectedWeaponIndex);
+    }
+
+    public String getDisplayName() {
+        return displayName;
     }
 }

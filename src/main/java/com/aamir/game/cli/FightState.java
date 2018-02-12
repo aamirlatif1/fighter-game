@@ -12,7 +12,7 @@ public class FightState implements State {
 
     @Override
     public void startGame() {
-
+        game.getMacroCommand().fillStartedCommands();
     }
 
     @Override

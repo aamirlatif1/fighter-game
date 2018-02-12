@@ -53,14 +53,12 @@ public class GameTest {
     public void attackWithNotAvailableWeapon() throws Exception {
         game.purchaseWeapon(player, knife);
         Fight fight = new Fight(player);
-        fight.start();
         fight.attackWith(spear);
     }
 
     @Test
     public void startFight() throws Exception {
         Fight fight = new Fight(player);
-        fight.start();
         assertFalse(fight.finished());
     }
     
@@ -68,7 +66,6 @@ public class GameTest {
     public void attackEnemyWithKnife() throws Exception {
         game.purchaseWeapon(player, knife);
         Fight fight = new Fight(player);
-        fight.start();
         fight.attackWith(knife);
         assertEquals(90, fight.getEnemy().getHealth());
         assertEquals(1, fight.getPlayer().getExperience());
@@ -78,7 +75,6 @@ public class GameTest {
     public void killEnemy() throws Exception {
         game.purchaseWeapon(player, knife);
         Fight fight = new Fight(player);
-        fight.start();
         for(int i = 0; i < 10; i++)
             fight.attackWith(knife);
         assertEquals(0, fight.getEnemy().getHealth());
@@ -89,7 +85,6 @@ public class GameTest {
     public void counterAttack() throws Exception {
         game.purchaseWeapon(player, knife);
         Fight fight = new Fight(player);
-        fight.start();
         fight.counterAttackWith(knife);
         assertEquals(90, fight.getPlayer().getHealth());
     }
@@ -98,7 +93,6 @@ public class GameTest {
     public void attachWithOnEnemyWithShield() throws Exception {
         game.purchaseWeapon(player, knife);
         Fight fight = new Fight(player);
-        fight.start();
         fight.getEnemy().addWeapon(shield);
         fight.attackWith(knife);
         assertEquals(100, fight.getEnemy().getHealth());
@@ -110,7 +104,6 @@ public class GameTest {
         assertEquals(1, player.getCurrentLevel());
         game.purchaseWeapon(player, knife);
         Fight fight = new Fight(player);
-        fight.start();
         for(int i = 0; i < 10; i++)
             fight.attackWith(knife);
         assertEquals(2, player.getCurrentLevel());

@@ -1,5 +1,7 @@
 package com.aamir.game;
 
+import com.aamir.game.cli.out.Logger;
+import com.aamir.game.cli.out.LoggerFactory;
 import com.aamir.game.exception.WeaponNotAvailableException;
 import com.aamir.game.model.Player;
 import com.aamir.game.model.Weapon;
@@ -8,17 +10,15 @@ public class Fight {
 
     private final Player player;
     private final Player enemy;
-
     private boolean finished;
+    Logger logger = LoggerFactory.getLogger();
 
     public Fight(Player player) {
         this.player = player;
         this.enemy = new Player("Opponent");
+        finished = false;
     }
 
-    public void start() {
-        this.finished = false;
-    }
 
     public boolean finished() {
         return finished;
@@ -52,11 +52,25 @@ public class Fight {
         if (damage > 0)
             defender.reduceHealth(weapon.getDamage());
         attacker.reduceHealth(defenceWeapon.getDamage());
-        if (attacker.isKilled() || defender.isKilled())
+        logger.log("%s made %d damage to opponent and gained %d experience",
+                player.getDisplayName(), damage, weapon.getExperience());
+        if (attacker.isKilled()) {
             finished = true;
+            logger.log("%s is killed. Fight is over", attacker.getDisplayName());
+        }
+        if (defender.isKilled()) {
+            finished = true;
+            logger.log("%s is killed. Fight is over", defender.getDisplayName());
+        }
+        if(!finished){
+            logger.log("%s has health : %d, %s has health : %d", attacker.getDisplayName(), attacker.getHealth(),
+                    defender.getDisplayName(), defender.getHealth());
+        }
+
     }
 
     public void attackWithSelectedWeapon() {
         attackWith(player.getSelectWeapon());
     }
+
 }
