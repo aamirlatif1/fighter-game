@@ -1,6 +1,8 @@
 package com.aamir.game.cli.command;
 
 import com.aamir.game.Game;
+import com.aamir.game.cli.in.ConsoleReader;
+import com.aamir.game.cli.in.InputReader;
 import com.aamir.game.model.Weapon;
 
 import java.util.ArrayList;
@@ -11,17 +13,19 @@ public class MacroCommand {
     Game game;
     private List<String> messages = new ArrayList<>();
     private List<Command> commands = new ArrayList<>();
-    private Command gameStartCommand = () -> game.start();
     private Command gameLoadCommand = () -> game.loadGameState();
     private Command gameExitCommand = () -> System.exit(1);
-    private Command startFightCommand = () -> game.startFight();
+    private Command startFightCommand;
     private Command changeWeaponCommand = () -> game.changeWeaponState();
     private Command purchaseWeaponStateCommand = () -> game.purchaseWeaponState();
+    private Command gameStartCommand;
     private Command attackOpponentCommand;
 
     public MacroCommand(Game game) {
         this.game = game;
+        gameStartCommand = new GameStartCommand(game);
         attackOpponentCommand = new AttackOpponentCommand(game);
+        startFightCommand = new StartFightCommand(game);
     }
 
     public void fillGameStartCommands(){
@@ -44,10 +48,13 @@ public class MacroCommand {
         addCommand(gameExitCommand, "Exit");
     }
 
-    public void weaponPurchaseCommands(){
+    public void fillWeaponPurchaseCommands(){
+        clear();
+        int index = 0;
         for (Weapon weapon : game.getWeapons())
-            if (weapon.getLevel() <= game.getPlayer().getCurrentLevel())
-                addCommand(() -> game.purchaseWeapon(weapon.getLevel()+1), weapon.getName());
+            if (weapon.getLevel() <= game.getPlayer().getCurrentLevel()
+                    && !game.getPlayer().getWeapons().contains(weapon))
+                addCommand(new PurchaseWeaponCommand(game, index++), weapon.getName());
         addCommand(gameExitCommand, "Exit");
     }
 

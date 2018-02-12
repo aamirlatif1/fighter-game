@@ -54,15 +54,23 @@ public class Weapon {
         return level;
     }
 
-
-
-   /* @Override
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Weapon weapon = (Weapon) o;
         return name.equals(weapon.name);
-    }*/
+    }
 
-
+    @Override
+    public String toString() {
+        return "Weapon{" +
+                "name='" + name + '\'' +
+                ", price=" + price +
+                ", damage=" + damage +
+                ", defence=" + defence +
+                ", experience=" + experience +
+                ", level=" + level +
+                '}';
+    }
 }

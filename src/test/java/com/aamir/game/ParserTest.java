@@ -30,7 +30,7 @@ public class ParserTest {
     @Test
     public void parseLevels() throws Exception {
         Parser<Level> parser = new LevelParser();
-        List<String> list = Arrays.asList("1,0", "2,10", "2,30");
+        List<String> list = Arrays.asList("1,0,100", "2,10,200", "2,30,300");
         List<Level> weapons = parser.parse(list);
         List<Integer> actual = weapons.stream().map(o -> o.getExperienceRequired()).collect(Collectors.toList());
         assertThat(actual, contains(0, 10, 30));

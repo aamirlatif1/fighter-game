@@ -10,6 +10,7 @@ public class PlayerBuilder {
     private boolean killed = false;
     private int experience;
     private int level;
+    private List<Integer> weaponIds;
 
     public static PlayerBuilder builder(String name) {
         return new PlayerBuilder(name);
@@ -44,6 +45,11 @@ public class PlayerBuilder {
     }
 
     public PlayerBuilder withKilled(boolean killed){
+        this.killed = killed;
+        return this;
+    }
+
+    public PlayerBuilder withWeaponIds(List<Integer> weaponIds){
         this.killed = killed;
         return this;
     }

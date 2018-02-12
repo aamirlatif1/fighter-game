@@ -2,6 +2,7 @@ package com.aamir.game;
 
 import com.aamir.game.cli.*;
 import com.aamir.game.cli.command.MacroCommand;
+import com.aamir.game.cli.in.InputReader;
 import com.aamir.game.cli.out.Logger;
 import com.aamir.game.cli.out.LoggerFactory;
 import com.aamir.game.exception.InsufficientCoinsException;
@@ -11,8 +12,6 @@ import com.aamir.game.model.Weapon;
 import com.aamir.game.util.*;
 
 import java.util.List;
-import java.util.Scanner;
-
 import static com.aamir.game.util.Constants.WEAPONS_FILE_PATH;
 
 
@@ -30,8 +29,10 @@ public class Game {
     private State fightState;
     private MacroCommand macroCommand;
     private Fight fight;
+    private InputReader inputReader;
 
-    public Game() {
+    public Game(InputReader inputReader) {
+        this.inputReader = inputReader;
         notStartedState = new NotStartedState(this);
         startedSate = new StartedState(this);
         purchaseWeaponState = new PurchaseWeaponState(this);
@@ -41,53 +42,46 @@ public class Game {
         macroCommand.fillGameStartCommands();
     }
 
-    private void loadMetadata(){
-        loadWeapons();
-        loadWLevels();
-        loadOpponents();
-    }
-
-    private  void loadWeapons() {
-        Parser<Weapon> parser = new WeaponParser();
-        List<String> data = FileUtil.readData(WEAPONS_FILE_PATH);
-        weapons = parser.parse(data);
-    }
-    private  void loadWLevels() {
-        Parser<Level> parser = new LevelParser();
-        List<String> data = FileUtil.readData(WEAPONS_FILE_PATH);
-        levels = parser.parse(data);
-    }
-    private  void loadOpponents() {
-        Parser<Player> parser = new OpponentParser();
-        List<String> data = FileUtil.readData(WEAPONS_FILE_PATH);
-        opponents = parser.parse(data);
-    }
-
-    public void purchaseWeapon(Player player, Weapon weapon) {
-        player.setCoins(player.getCoins() - weapon.getPrice());
-        if(player.getCoins() < weapon.getPrice())
-            throw new InsufficientCoinsException("You have not enough coins to purchase : "+weapon.getName());
-        player.addWeapon(weapon);
-    }
-
-    public void purchaseWeapon(int index){
-        purchaseWeapon(player, weapons.get(index));
-    }
-
-    public void start() {
+    public void start(String playerName) {
         loadMetadata();
-        Scanner scanner = new Scanner(System.in);
-        logger.log("Enter player name : ");
-        String name = scanner.next();
-        player = new Player(name);
+        player = new Player(playerName);
         // Knife is given as default weapon
         player.addWeapon(weapons.get(0));
         state.startGame();
         logger.log("Naw game Started");
     }
 
+    public void purchaseWeapon(Player player, Weapon weapon) {
+        if(player.getCoins() < weapon.getPrice())
+            throw new InsufficientCoinsException("You have not enough coins to purchase : "+weapon.getName());
+        player.setCoins(player.getCoins() - weapon.getPrice());
+        player.addWeapon(weapon);
+    }
+
     public void loadGameState() {
         logger.log("Game has been loaded");
+    }
+
+    public void purchaseWeapon(int index){
+        purchaseWeapon(player, weapons.get(index));
+    }
+
+    public void startFight() {
+        fight = new Fight(player);
+        state.startFight();
+        logger.log("Fight Started");
+    }
+
+    public void displayCommands(){
+        int i = 1;
+        for (String  command : macroCommand.getCommandMessages()) {
+            logger.log(String.format("%d - %s", i++, command));
+        }
+    }
+
+    public void changeWeaponState() {
+        logger.log("Change weapon");
+
     }
 
     public List<Weapon> getWeapons() {
@@ -122,21 +116,8 @@ public class Game {
         this.state = state;
     }
 
-    public void displayCommands(){
-        int i = 1;
-        for (String  command : macroCommand.getCommandMessages()) {
-            logger.log(String.format("%d - %s", i++, command));
-        }
-    }
-
     public void executeCommand(int commandIndex) {
         macroCommand.excuteCommand(commandIndex);
-    }
-
-    public void startFight() {
-        fight = new Fight(player);
-        state.startFight();
-        logger.log("Fight Started");
     }
 
     public void purchaseWeaponState() {
@@ -152,8 +133,29 @@ public class Game {
         return fight;
     }
 
-    public void changeWeaponState() {
-        logger.log("Change weapon");
+    private void loadMetadata(){
+        loadWeapons();
+        loadWLevels();
+        loadOpponents();
+    }
 
+    private  void loadWeapons() {
+        Parser<Weapon> parser = new WeaponParser();
+        List<String> data = FileUtil.readData(WEAPONS_FILE_PATH);
+        weapons = parser.parse(data);
+    }
+    private  void loadWLevels() {
+        Parser<Level> parser = new LevelParser();
+        List<String> data = FileUtil.readData(WEAPONS_FILE_PATH);
+        levels = parser.parse(data);
+    }
+    private  void loadOpponents() {
+        Parser<Player> parser = new OpponentParser();
+        List<String> data = FileUtil.readData(WEAPONS_FILE_PATH);
+        opponents = parser.parse(data);
+    }
+
+    public InputReader getInputReader() {
+        return inputReader;
     }
 }

@@ -1,5 +1,6 @@
-Player1,1,1
-Player1,1,1
-Player1,1,1
-Player1,1,1
-Player1,1,1
+Name,Level,Weapons
+Level 1 Player,1,1
+Level 2 Player,2,2
+Level 3 Player,3,1_3
+Level 4 Player,4,2_3
+Level 5 Player,5,4

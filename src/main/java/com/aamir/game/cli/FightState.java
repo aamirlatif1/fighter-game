@@ -12,12 +12,14 @@ public class FightState implements State {
 
     @Override
     public void startGame() {
+        game.setState(game.getStartedSate());
         game.getMacroCommand().fillStartedCommands();
     }
 
+
     @Override
-    public void loadGame() {
-
+    public void purchaseWeapon() {
+        game.setState(game.getPurchaseWeaponState());
+        game.getMacroCommand().fillWeaponPurchaseCommands();
     }
-
 }

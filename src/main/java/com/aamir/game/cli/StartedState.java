@@ -13,6 +13,7 @@ public class StartedState implements State {
     @Override
     public void purchaseWeapon() {
         game.setState(game.getPurchaseWeaponState());
+        game.getMacroCommand().fillWeaponPurchaseCommands();
     }
 
     @Override

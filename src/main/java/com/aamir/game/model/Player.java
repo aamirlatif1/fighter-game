@@ -1,7 +1,6 @@
 package com.aamir.game.model;
 
 
-import com.aamir.game.model.Weapon;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +10,7 @@ public class Player {
     private int health;
     private int coins;
     private List<Weapon> weapons;
+    private List<Integer> weaponIds;
     private boolean killed;
     private int experience;
     private int currentLevel;
@@ -111,5 +111,27 @@ public class Player {
 
     public String getDisplayName() {
         return displayName;
+    }
+
+    public List<Integer> getWeaponIds() {
+        return weaponIds;
+    }
+
+    public void setWeaponIds(List<Integer> weaponIds) {
+        this.weaponIds = weaponIds;
+    }
+
+    @Override
+    public String toString() {
+        return "Player{" +
+                "displayName='" + displayName + '\'' +
+                ", health=" + health +
+                ", coins=" + coins +
+                ", weapons=" + weapons +
+                ", killed=" + killed +
+                ", experience=" + experience +
+                ", currentLevel=" + currentLevel +
+                ", selectedWeaponIndex=" + selectedWeaponIndex +
+                '}';
     }
 }

@@ -1,5 +1,7 @@
 package com.aamir.game;
 
+import com.aamir.game.cli.in.ConsoleReader;
+import com.aamir.game.cli.in.InputReader;
 import com.aamir.game.exception.InsufficientCoinsException;
 import com.aamir.game.exception.WeaponNotAvailableException;
 import com.aamir.game.model.Player;
@@ -11,7 +13,8 @@ import static org.junit.Assert.*;
 
 public class GameTest {
 
-    static Game game = new Game();
+    static InputReader inputReader = new ConsoleReader();
+    static Game game = new Game(inputReader);
     static Weapon knife = new Weapon("Knife", 10, 10, 0);
     static Weapon spear = new Weapon("Spear", 20, 20, 0);
     static Weapon shield = new Weapon("Shield", 30, 5, 10);
