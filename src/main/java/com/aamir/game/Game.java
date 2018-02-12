@@ -1,6 +1,5 @@
 package com.aamir.game;
 
-import com.aamir.game.cli.*;
 import com.aamir.game.cli.command.MacroCommand;
 import com.aamir.game.cli.in.InputReader;
 import com.aamir.game.cli.out.Logger;
@@ -9,6 +8,7 @@ import com.aamir.game.exception.InsufficientCoinsException;
 import com.aamir.game.model.Level;
 import com.aamir.game.model.Player;
 import com.aamir.game.model.Weapon;
+import com.aamir.game.state.*;
 import com.aamir.game.util.*;
 
 import java.util.List;

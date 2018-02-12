@@ -1,8 +1,8 @@
 package com.aamir.game;
 
-import com.aamir.game.cli.FightState;
-import com.aamir.game.cli.PurchaseWeaponState;
-import com.aamir.game.cli.StartedState;
+import com.aamir.game.state.FightState;
+import com.aamir.game.state.PurchaseWeaponState;
+import com.aamir.game.state.StartedState;
 import com.aamir.game.cli.command.*;
 import com.aamir.game.cli.in.ConsoleReader;
 import com.aamir.game.cli.in.InputReader;

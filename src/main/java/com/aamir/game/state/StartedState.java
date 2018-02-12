@@ -1,4 +1,4 @@
-package com.aamir.game.cli;
+package com.aamir.game.state;
 
 import com.aamir.game.Game;
 
