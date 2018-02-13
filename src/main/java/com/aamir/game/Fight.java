@@ -6,16 +6,20 @@ import com.aamir.game.exception.WeaponNotAvailableException;
 import com.aamir.game.model.Player;
 import com.aamir.game.model.Weapon;
 
-public class Fight {
+import java.io.Serializable;
+
+public class Fight implements Serializable {
+
+
 
     private final Player player;
-    private final Player enemy;
+    private final Player opponent;
     private boolean finished;
     Logger logger = LoggerFactory.getLogger();
 
     public Fight(Player player) {
         this.player = player;
-        this.enemy = new Player("Opponent");
+        this.opponent = new Player("Opponent");
         finished = false;
     }
 
@@ -28,14 +32,14 @@ public class Fight {
         if (!player.getWeapons().contains(weapon)) {
             throw new WeaponNotAvailableException(String.format("You have not purchase %s yet", weapon.getName()));
         }
-        makeDamage(weapon, player, enemy);
+        makeDamage(weapon, player, opponent);
         player.increaseExperience(weapon.getExperience());
         if(player.getExperience() >= 10)
             player.increaseLevel();
     }
 
-    public Player getEnemy() {
-        return enemy;
+    public Player getOpponent() {
+        return opponent;
     }
 
     public Player getPlayer() {
@@ -43,7 +47,7 @@ public class Fight {
     }
 
     public void counterAttackWith(Weapon weapon) {
-        makeDamage(weapon, enemy, player);
+        makeDamage(weapon, opponent, player);
     }
 
     private void makeDamage(Weapon weapon, Player attacker, Player defender) {

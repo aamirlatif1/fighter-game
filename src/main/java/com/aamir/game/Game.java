@@ -29,7 +29,7 @@ public class Game {
     private State fightState;
     private MacroCommand macroCommand;
     private Fight fight;
-    private InputReader inputReader;
+    private transient InputReader inputReader;
 
     public Game(InputReader inputReader) {
         this.inputReader = inputReader;
@@ -59,6 +59,7 @@ public class Game {
     }
 
     public void loadGameState() {
+        player = FileUtil.loadPlayer();
         logger.log("Game has been loaded");
     }
 
@@ -117,7 +118,7 @@ public class Game {
     }
 
     public void executeCommand(int commandIndex) {
-        macroCommand.excuteCommand(commandIndex);
+        macroCommand.executeCommand(commandIndex);
     }
 
     public void purchaseWeaponState() {

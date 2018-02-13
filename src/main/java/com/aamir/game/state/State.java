@@ -1,6 +1,8 @@
 package com.aamir.game.state;
 
-public interface State {
+import java.io.Serializable;
+
+public interface State extends Serializable {
     default void startGame(){ }
     default void loadGame(){}
     default void purchaseWeapon(){}

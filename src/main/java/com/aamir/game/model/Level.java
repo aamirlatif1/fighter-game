@@ -1,6 +1,8 @@
 package com.aamir.game.model;
 
-public class Level {
+import java.io.Serializable;
+
+public class Level implements Serializable {
     private int number;
     private int experienceRequired;
     private int availableCoins;

@@ -70,7 +70,7 @@ public class GameTest {
         game.purchaseWeapon(player, knife);
         Fight fight = new Fight(player);
         fight.attackWith(knife);
-        assertEquals(90, fight.getEnemy().getHealth());
+        assertEquals(90, fight.getOpponent().getHealth());
         assertEquals(1, fight.getPlayer().getExperience());
     }
 
@@ -80,8 +80,8 @@ public class GameTest {
         Fight fight = new Fight(player);
         for(int i = 0; i < 10; i++)
             fight.attackWith(knife);
-        assertEquals(0, fight.getEnemy().getHealth());
-        assertTrue(fight.getEnemy().isKilled());
+        assertEquals(0, fight.getOpponent().getHealth());
+        assertTrue(fight.getOpponent().isKilled());
     }
 
     @Test
@@ -96,9 +96,9 @@ public class GameTest {
     public void attachWithOnEnemyWithShield() throws Exception {
         game.purchaseWeapon(player, knife);
         Fight fight = new Fight(player);
-        fight.getEnemy().addWeapon(shield);
+        fight.getOpponent().addWeapon(shield);
         fight.attackWith(knife);
-        assertEquals(100, fight.getEnemy().getHealth());
+        assertEquals(100, fight.getOpponent().getHealth());
         assertEquals(95, fight.getPlayer().getHealth());
     }
 

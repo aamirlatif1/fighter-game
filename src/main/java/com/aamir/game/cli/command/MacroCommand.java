@@ -1,8 +1,6 @@
 package com.aamir.game.cli.command;
 
 import com.aamir.game.Game;
-import com.aamir.game.cli.in.ConsoleReader;
-import com.aamir.game.cli.in.InputReader;
 import com.aamir.game.model.Weapon;
 
 import java.util.ArrayList;
@@ -14,10 +12,10 @@ public class MacroCommand {
     private List<String> messages = new ArrayList<>();
     private List<Command> commands = new ArrayList<>();
     private Command gameLoadCommand = () -> game.loadGameState();
-    private Command gameExitCommand = () -> System.exit(1);
-    private Command startFightCommand;
     private Command changeWeaponCommand = () -> game.changeWeaponState();
     private Command purchaseWeaponStateCommand = () -> game.purchaseWeaponState();
+    private Command gameExitCommand;
+    private Command startFightCommand;
     private Command gameStartCommand;
     private Command attackOpponentCommand;
 
@@ -26,6 +24,7 @@ public class MacroCommand {
         gameStartCommand = new GameStartCommand(game);
         attackOpponentCommand = new AttackOpponentCommand(game);
         startFightCommand = new StartFightCommand(game);
+        gameExitCommand = new GameExitCommand();
     }
 
     public void fillGameStartCommands(){
@@ -63,7 +62,7 @@ public class MacroCommand {
         messages.add(message);
     }
 
-    public void excuteCommand(int index){
+    public void executeCommand(int index){
         commands.get(index - 1).execute();
     }
 

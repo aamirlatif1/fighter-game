@@ -1,12 +1,10 @@
 package com.aamir.game.model;
 
-public class Weapon {
+import java.io.Serializable;
 
-    public static  Weapon ZERO_DEFENCE_WEAPON;
+public class Weapon implements Serializable {
 
-    static {
-        ZERO_DEFENCE_WEAPON = new Weapon("No Defence", 0, 0, 0);
-    }
+    public static final  Weapon ZERO_DEFENCE_WEAPON = new Weapon("No Defence", 0, 0, 0);
 
     private String name;
     private int price;
