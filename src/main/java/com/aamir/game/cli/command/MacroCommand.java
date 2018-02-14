@@ -15,7 +15,7 @@ public class MacroCommand {
     private List<Command> commands = new ArrayList<>();
     private Command loadGameCommand;
     private Command purchaseWeaponStateCommand;
-    private Command changeWeaponCommand;
+    private Command changeWeaponStateCommand;
     private Command viewPlayerCommand;
     private Command gameExitCommand;
     private Command startFightCommand;
@@ -27,9 +27,9 @@ public class MacroCommand {
         gameStartCommand = new GameStartCommand(game);
         attackOpponentCommand = new AttackOpponentCommand(game);
         startFightCommand = new StartFightCommand(game);
-        gameExitCommand = new GameExitCommand();
+        gameExitCommand = new GameExitCommand(game);
         viewPlayerCommand = new ViewPlayerCommand(game);
-        changeWeaponCommand = new ChangeWeaponCommand(game);
+        changeWeaponStateCommand = new ChangeWeaponStateCommand(game);
         loadGameCommand = new LoadGameCommand(game);
         purchaseWeaponStateCommand = new PurchaseWeaponStateCommand(game);
     }
@@ -37,9 +37,10 @@ public class MacroCommand {
     public void gameStartedCommands(){
         commands.clear();
         commands.add(startFightCommand);
+        commands.add(changeWeaponStateCommand);
         commands.add(purchaseWeaponStateCommand);
-        commands.add(gameExitCommand);
         commands.add(viewPlayerCommand);
+        commands.add(gameExitCommand);
         logger.debug(" Filled game start with options");
 
     }
@@ -54,15 +55,15 @@ public class MacroCommand {
     public void fillLoadOptions() {
         commands.clear();
         commands.add(gameStartCommand);
+        commands.add(loadGameCommand);
         commands.add(gameExitCommand);
         logger.debug(" Filled game without load");
     }
 
 
-    public void fillFightCommand() {
+    public void fillFightCommands() {
         commands.clear();
         commands.add(attackOpponentCommand);
-        commands.add(changeWeaponCommand);
         commands.add(viewPlayerCommand);
         commands.add(gameExitCommand);
     }
@@ -74,6 +75,17 @@ public class MacroCommand {
             if (weapon.getLevel() <= game.getPlayer().getCurrentLevel()
                     && !game.getPlayer().getWeapons().contains(weapon))
                 commands.add(new PurchaseWeaponCommand(game, index++));
+        commands.add(startFightCommand);
+        commands.add(viewPlayerCommand);
+        commands.add(gameExitCommand);
+    }
+
+    public void fillChangeWeaponCommands() {
+        commands.clear();
+        int index = 0;
+        for (Weapon weapon : game.getPlayer().getWeapons())
+            commands.add(new ChangeWeaponCommand(game, index++));
+        commands.add(startFightCommand);
         commands.add(viewPlayerCommand);
         commands.add(gameExitCommand);
     }

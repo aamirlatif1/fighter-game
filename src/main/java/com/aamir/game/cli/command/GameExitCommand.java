@@ -9,6 +9,10 @@ public class GameExitCommand implements Command {
     private Game game;
     private Logger logger = LoggerFactory.getLogger();
 
+    public GameExitCommand(Game game) {
+        this.game = game;
+    }
+
     @Override
     public void execute() {
         logger.log("Do you want to save game (y/n) : ");

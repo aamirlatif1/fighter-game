@@ -58,6 +58,14 @@ public class Game {
         logger.log("Naw game Started");
     }
 
+    public void loadGameState() {
+        loadMetadata();
+        player = FileUtil.loadPlayer();
+        state = startedSate;
+        state.startGame();
+        logger.log("Game has been loaded");
+    }
+
     public void viewPlayer(){
         logger.log(player.toString());
     }
@@ -69,13 +77,13 @@ public class Game {
         player.addWeapon(weapon);
     }
 
-    public void loadGameState() {
-        player = FileUtil.loadPlayer();
-        logger.log("Game has been loaded");
-    }
-
     public void purchaseWeapon(int index){
-        purchaseWeapon(weapons.get(index));
+        try {
+            purchaseWeapon(weapons.get(index));
+            logger.log("You successfully purchase weapon");
+        }catch (InsufficientCoinsException ex){
+            logger.log(ex.getMessage());
+        }
     }
 
     public void startFight() {
@@ -91,9 +99,9 @@ public class Game {
         }
     }
 
-    public void changeWeaponState(int selectWeaponIndex) {
+    public void changeWeapon(int selectWeaponIndex) {
         player.setSelectedWeaponIndex(selectWeaponIndex);
-        logger.log("Change weapon");
+
 
     }
 

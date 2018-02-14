@@ -8,20 +8,21 @@ public class ChangeWeaponCommand implements Command {
 
     private Game game;
     private Logger logger = LoggerFactory.getLogger();
+    private int weaponIndex;
 
-    public ChangeWeaponCommand(Game game) {
+    public ChangeWeaponCommand(Game game, int weaponIndex) {
         this.game = game;
+        this.weaponIndex = weaponIndex;
     }
 
     @Override
     public void execute() {
-        logger.log("Select weapon");
-        int selectWeaponIndex = game.getInputReader().readInt();
-        game.changeWeaponState(selectWeaponIndex);
+        game.changeWeapon(weaponIndex);
+        logger.log("Weapon changed.");
     }
 
     @Override
     public String toString() {
-        return "Change weapon";
+        return game.getPlayer().getWeapons().get(weaponIndex).getName();
     }
 }

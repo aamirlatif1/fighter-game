@@ -12,12 +12,6 @@ public class PurchaseWeaponState implements State {
 
     @Override
     public void startGame() {
-
-    }
-
-    @Override
-    public void loadGame() {
-
     }
 
     @Override
@@ -28,5 +22,6 @@ public class PurchaseWeaponState implements State {
     @Override
     public void startFight() {
         game.setState(game.getFightState());
+        game.getMacroCommand().fillFightCommands();
     }
 }
