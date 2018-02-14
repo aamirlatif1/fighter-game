@@ -25,5 +25,5 @@ $ mvn clean package
 ```
 ## Run
 ```
-$ java -jar fighter-game-1.0-SNAPSHOT.jar
+$ java -jar target/fighter-game-1.0-SNAPSHOT.jar
 ```
