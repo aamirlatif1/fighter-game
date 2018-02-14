@@ -1,6 +1,8 @@
 package com.aamir.game.cli.command;
 
 import com.aamir.game.Game;
+import com.aamir.game.cli.out.Logger;
+import com.aamir.game.cli.out.LoggerFactory;
 import com.aamir.game.model.Weapon;
 
 import java.util.ArrayList;
@@ -8,12 +10,13 @@ import java.util.List;
 
 public class MacroCommand {
 
+    Logger logger = LoggerFactory.getLogger();
     Game game;
-    private List<String> messages = new ArrayList<>();
     private List<Command> commands = new ArrayList<>();
-    private Command gameLoadCommand = () -> game.loadGameState();
-    private Command changeWeaponCommand = () -> game.changeWeaponState();
-    private Command purchaseWeaponStateCommand = () -> game.purchaseWeaponState();
+    private Command loadGameCommand;
+    private Command purchaseWeaponStateCommand;
+    private Command changeWeaponCommand;
+    private Command viewPlayerCommand;
     private Command gameExitCommand;
     private Command startFightCommand;
     private Command gameStartCommand;
@@ -25,53 +28,62 @@ public class MacroCommand {
         attackOpponentCommand = new AttackOpponentCommand(game);
         startFightCommand = new StartFightCommand(game);
         gameExitCommand = new GameExitCommand();
+        viewPlayerCommand = new ViewPlayerCommand(game);
+        changeWeaponCommand = new ChangeWeaponCommand(game);
+        loadGameCommand = new LoadGameCommand(game);
+        purchaseWeaponStateCommand = new PurchaseWeaponStateCommand(game);
     }
 
-    public void fillGameStartCommands(){
-        addCommand(gameStartCommand, "Start Game");
-        addCommand(gameLoadCommand, "Load existing");
-        addCommand(gameExitCommand, "Exit");
+    public void gameStartedCommands(){
+        commands.clear();
+        commands.add(startFightCommand);
+        commands.add(purchaseWeaponStateCommand);
+        commands.add(gameExitCommand);
+        commands.add(viewPlayerCommand);
+        logger.debug(" Filled game start with options");
+
     }
 
-    public void fillStartedCommands(){
-        clear();
-        addCommand(startFightCommand, "Start Fight");
-        addCommand(purchaseWeaponStateCommand, "Purchase Weapon");
-        addCommand(gameExitCommand, "Exit");
+    public void fillGameStartCommands() {
+        commands.clear();
+        commands.add(gameStartCommand);
+        commands.add(gameExitCommand);
+        logger.debug(" Filled game without load");
     }
 
-    public void fillFightCommand(){
-        clear();
-        addCommand(attackOpponentCommand, "Attach opponent");
-        addCommand(changeWeaponCommand, "Change Weapon");
-        addCommand(gameExitCommand, "Exit");
+    public void fillLoadOptions() {
+        commands.clear();
+        commands.add(gameStartCommand);
+        commands.add(gameExitCommand);
+        logger.debug(" Filled game without load");
     }
 
-    public void fillWeaponPurchaseCommands(){
-        clear();
+
+    public void fillFightCommand() {
+        commands.clear();
+        commands.add(attackOpponentCommand);
+        commands.add(changeWeaponCommand);
+        commands.add(viewPlayerCommand);
+        commands.add(gameExitCommand);
+    }
+
+    public void fillWeaponPurchaseCommands() {
+        commands.clear();
         int index = 0;
         for (Weapon weapon : game.getWeapons())
             if (weapon.getLevel() <= game.getPlayer().getCurrentLevel()
                     && !game.getPlayer().getWeapons().contains(weapon))
-                addCommand(new PurchaseWeaponCommand(game, index++), weapon.getName());
-        addCommand(gameExitCommand, "Exit");
+                commands.add(new PurchaseWeaponCommand(game, index++));
+        commands.add(viewPlayerCommand);
+        commands.add(gameExitCommand);
     }
 
-    public void addCommand(Command command, String message){
-        commands.add(command);
-        messages.add(message);
-    }
-
-    public void executeCommand(int index){
+    public void executeCommand(int index) {
         commands.get(index - 1).execute();
     }
 
-    public List<String> getCommandMessages() {
-        return messages;
-    }
 
-    public void clear(){
-        commands.clear();
-        messages.clear();
+    public List<Command> getCommands() {
+        return commands;
     }
 }

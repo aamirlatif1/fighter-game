@@ -1,6 +1,4 @@
-Name,Price,Damage,Defence,Level
-Knife,10,10,0,1
-Spear,20,15,0,2
-Shield,20,5,10,2
-Sword,30,25,0,3
-Armour,20,5,15,3
+Name,Price,Damage,Experice,Level
+Knife,10,10,10,1
+Spear,20,15,15,2
+Sword,30,25,20,3

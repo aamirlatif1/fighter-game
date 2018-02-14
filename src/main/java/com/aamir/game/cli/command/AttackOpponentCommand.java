@@ -16,4 +16,9 @@ public class AttackOpponentCommand implements Command {
             game.getState().startGame();
         }
     }
+
+    @Override
+    public String toString() {
+        return "Attack opponent";
+    }
 }

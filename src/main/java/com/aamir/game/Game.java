@@ -1,5 +1,6 @@
 package com.aamir.game;
 
+import com.aamir.game.cli.command.Command;
 import com.aamir.game.cli.command.MacroCommand;
 import com.aamir.game.cli.in.InputReader;
 import com.aamir.game.cli.out.Logger;
@@ -11,6 +12,7 @@ import com.aamir.game.model.Weapon;
 import com.aamir.game.state.*;
 import com.aamir.game.util.*;
 
+import java.io.File;
 import java.util.List;
 import static com.aamir.game.util.Constants.WEAPONS_FILE_PATH;
 
@@ -39,7 +41,11 @@ public class Game {
         fightState = new FightState(this);
         state = new NotStartedState(this);
         macroCommand = new MacroCommand(this);
-        macroCommand.fillGameStartCommands();
+        if (FileUtil.gameStateFileExist()) {
+            macroCommand.fillLoadOptions();
+        } else{
+            macroCommand.fillGameStartCommands();
+        }
     }
 
     public void start(String playerName) {
@@ -47,11 +53,16 @@ public class Game {
         player = new Player(playerName);
         // Knife is given as default weapon
         player.addWeapon(weapons.get(0));
+        state = startedSate;
         state.startGame();
         logger.log("Naw game Started");
     }
 
-    public void purchaseWeapon(Player player, Weapon weapon) {
+    public void viewPlayer(){
+        logger.log(player.toString());
+    }
+
+    public void purchaseWeapon(Weapon weapon) {
         if(player.getCoins() < weapon.getPrice())
             throw new InsufficientCoinsException("You have not enough coins to purchase : "+weapon.getName());
         player.setCoins(player.getCoins() - weapon.getPrice());
@@ -64,23 +75,24 @@ public class Game {
     }
 
     public void purchaseWeapon(int index){
-        purchaseWeapon(player, weapons.get(index));
+        purchaseWeapon(weapons.get(index));
     }
 
     public void startFight() {
-        fight = new Fight(player);
+        fight = new Fight(this);
         state.startFight();
         logger.log("Fight Started");
     }
 
     public void displayCommands(){
         int i = 1;
-        for (String  command : macroCommand.getCommandMessages()) {
+        for (Command command : macroCommand.getCommands()) {
             logger.log(String.format("%d - %s", i++, command));
         }
     }
 
-    public void changeWeaponState() {
+    public void changeWeaponState(int selectWeaponIndex) {
+        player.setSelectedWeaponIndex(selectWeaponIndex);
         logger.log("Change weapon");
 
     }
@@ -159,4 +171,17 @@ public class Game {
     public InputReader getInputReader() {
         return inputReader;
     }
+
+    public List<Player> getOpponents() {
+        return opponents;
+    }
+
+    public List<Level> getLevels() {
+        return levels;
+    }
+
+    public void saveGame() {
+        FileUtil.savePlayer(this.getPlayer());
+    }
+
 }

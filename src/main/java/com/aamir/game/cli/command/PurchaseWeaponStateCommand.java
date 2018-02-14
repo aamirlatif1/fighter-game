@@ -2,21 +2,21 @@ package com.aamir.game.cli.command;
 
 import com.aamir.game.Game;
 
-public class StartFightCommand implements Command {
+public class PurchaseWeaponStateCommand implements Command {
 
     private Game game;
 
-    public StartFightCommand(Game game) {
+    public PurchaseWeaponStateCommand(Game game) {
         this.game = game;
     }
 
     @Override
     public void execute() {
-        game.startFight();
+        game.purchaseWeaponState();
     }
 
     @Override
     public String toString() {
-        return "Start fight";
+        return "Purchase weapon";
     }
 }

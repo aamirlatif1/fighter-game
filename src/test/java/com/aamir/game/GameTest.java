@@ -4,7 +4,6 @@ import com.aamir.game.cli.in.ConsoleReader;
 import com.aamir.game.cli.in.InputReader;
 import com.aamir.game.exception.InsufficientCoinsException;
 import com.aamir.game.exception.WeaponNotAvailableException;
-import com.aamir.game.model.Player;
 import com.aamir.game.model.Weapon;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,70 +13,56 @@ import static org.junit.Assert.*;
 public class GameTest {
 
     static InputReader inputReader = new ConsoleReader();
-    static Game game = new Game(inputReader);
-    static Weapon knife = new Weapon("Knife", 10, 10, 0);
-    static Weapon spear = new Weapon("Spear", 20, 20, 0);
-    static Weapon shield = new Weapon("Shield", 30, 5, 10);
-    static Weapon armour = new Weapon("Armour", 60, 0, 30);
+    Game game = new Game(inputReader);
+    static Weapon knife = new Weapon("Knife", 10, 10, 10, 1);
+    static Weapon spear = new Weapon("Spear", 20, 15, 15, 2);
+    static Weapon sword = new Weapon("Sword", 60, 25, 20, 3);
 
-    Player player;
 
     @Before
     public void setUp() throws Exception {
-        player = new Player("Aamir");
-    }
-
-    @Test
-    public void hasPlayer() throws Exception {
-        assertEquals(50, player.getCoins());
-        assertEquals(100, player.getHealth());
-    }
-
-    @Test
-    public void hasWeapon() throws Exception {
-        assertEquals(10, knife.getPrice());
-        assertEquals(10, knife.getDamage());
-        assertEquals(0, knife.getDefence());
+        game.start("Aamir");
     }
 
     @Test
     public void purchaseWeapon() throws Exception {
-        game.purchaseWeapon(player, knife);
-        assertEquals(40, player.getCoins());
-        assertEquals(1, player.getWeapons().size());
+        game.purchaseWeapon(spear);
+        assertEquals(30, game.getPlayer().getCoins());
+        assertEquals(2, game.getPlayer().getWeapons().size());
     }
 
     @Test(expected = InsufficientCoinsException.class)
     public void insufficientBalanceOnPurchase() throws Exception {
-        game.purchaseWeapon(player, armour);
+        game.purchaseWeapon(sword);
     }
 
     @Test(expected = WeaponNotAvailableException.class)
     public void attackWithNotAvailableWeapon() throws Exception {
-        game.purchaseWeapon(player, knife);
-        Fight fight = new Fight(player);
+        game.purchaseWeapon(knife);
+        Fight fight = new Fight(game);
         fight.attackWith(spear);
     }
 
     @Test
     public void startFight() throws Exception {
-        Fight fight = new Fight(player);
+        Fight fight = new Fight(game);
         assertFalse(fight.finished());
     }
     
     @Test
     public void attackEnemyWithKnife() throws Exception {
-        game.purchaseWeapon(player, knife);
-        Fight fight = new Fight(player);
+        game.purchaseWeapon(knife);
+        Fight fight = new Fight(game);
         fight.attackWith(knife);
         assertEquals(90, fight.getOpponent().getHealth());
-        assertEquals(1, fight.getPlayer().getExperience());
+        assertEquals(10, fight.getPlayer().getExperience());
     }
 
     @Test
     public void killEnemy() throws Exception {
-        game.purchaseWeapon(player, knife);
-        Fight fight = new Fight(player);
+        game.purchaseWeapon(knife);
+        game.startFight();
+        Fight fight = game.getFight();
         for(int i = 0; i < 10; i++)
             fight.attackWith(knife);
         assertEquals(0, fight.getOpponent().getHealth());
@@ -86,30 +71,21 @@ public class GameTest {
 
     @Test
     public void counterAttack() throws Exception {
-        game.purchaseWeapon(player, knife);
-        Fight fight = new Fight(player);
+        game.purchaseWeapon(knife);
+        Fight fight = new Fight(game);
         fight.counterAttackWith(knife);
         assertEquals(90, fight.getPlayer().getHealth());
     }
 
-    @Test
-    public void attachWithOnEnemyWithShield() throws Exception {
-        game.purchaseWeapon(player, knife);
-        Fight fight = new Fight(player);
-        fight.getOpponent().addWeapon(shield);
-        fight.attackWith(knife);
-        assertEquals(100, fight.getOpponent().getHealth());
-        assertEquals(95, fight.getPlayer().getHealth());
-    }
 
     @Test
     public void increaseLevelOfPlayer() throws Exception {
-        assertEquals(1, player.getCurrentLevel());
-        game.purchaseWeapon(player, knife);
-        Fight fight = new Fight(player);
-        for(int i = 0; i < 10; i++)
+        assertEquals(1, game.getPlayer().getCurrentLevel());
+        game.purchaseWeapon(spear);
+        Fight fight = new Fight(game);
+        for(int i = 0; i < 4; i++)
             fight.attackWith(knife);
-        assertEquals(2, player.getCurrentLevel());
+        assertEquals(3, game.getPlayer().getCurrentLevel());
     }
 
 

@@ -15,11 +15,20 @@ public class Fight implements Serializable {
     private final Player player;
     private final Player opponent;
     private boolean finished;
+    private Game game;
     Logger logger = LoggerFactory.getLogger();
 
-    public Fight(Player player) {
-        this.player = player;
+    public Fight(Game game) {
+        this.game = game;
+        this.player = game.getPlayer();
         this.opponent = new Player("Opponent");
+        this.opponent.setSelectedWeaponIndex(0);
+        if(game.getWeapons() == null) {
+            //default weapon
+            this.opponent.addWeapon(new Weapon("Knife", 10, 10, 10, 1));
+        } else {
+            this.opponent.setWeapons(game.getWeapons());
+        }
         finished = false;
     }
 
@@ -33,9 +42,18 @@ public class Fight implements Serializable {
             throw new WeaponNotAvailableException(String.format("You have not purchase %s yet", weapon.getName()));
         }
         makeDamage(weapon, player, opponent);
+        makeDamage(opponent.getSelectWeapon(), opponent, player);
         player.increaseExperience(weapon.getExperience());
-        if(player.getExperience() >= 10)
+        updatePlayerLevel();
+    }
+
+    private void updatePlayerLevel() {
+        if(game.getLevels().size() > player.getCurrentLevel() &&
+                player.getExperience() >= game.getLevels().get(player.getCurrentLevel()).getExperienceRequired()) {
             player.increaseLevel();
+            player.setCoins(game.getLevels().get(player.getCurrentLevel()-1).getAvailableCoins());
+            logger.log("You have reached Level : %d",player.getCurrentLevel());
+        }
     }
 
     public Player getOpponent() {
@@ -51,13 +69,9 @@ public class Fight implements Serializable {
     }
 
     private void makeDamage(Weapon weapon, Player attacker, Player defender) {
-        Weapon defenceWeapon = defender.getDefenceWeapon();
-        int damage = weapon.getDamage() - defenceWeapon.getDefence();
-        if (damage > 0)
-            defender.reduceHealth(weapon.getDamage());
-        attacker.reduceHealth(defenceWeapon.getDamage());
+        defender.reduceHealth(weapon.getDamage());
         logger.log("%s made %d damage to opponent and gained %d experience",
-                player.getDisplayName(), damage, weapon.getExperience());
+                player.getDisplayName(), weapon.getDamage(), weapon.getExperience());
         if (attacker.isKilled()) {
             finished = true;
             logger.log("%s is killed. Fight is over", attacker.getDisplayName());

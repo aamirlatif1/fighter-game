@@ -16,4 +16,9 @@ public class PurchaseWeaponCommand implements Command {
     public void execute() {
         game.purchaseWeapon(weaponId);
     }
+
+    @Override
+    public String toString() {
+        return game.getWeapons().get(weaponId).getName();
+    }
 }

@@ -68,17 +68,6 @@ public class Player implements Serializable {
         weapons.add(weapon);
     }
 
-    public Weapon getDefenceWeapon() {
-        Weapon defenceWeapon = Weapon.ZERO_DEFENCE_WEAPON;
-        if(weapons != null) {
-            for (Weapon weapon : weapons) {
-                if (weapon.getDefence() > defenceWeapon.getDefence())
-                    defenceWeapon = weapon;
-            }
-        }
-        return defenceWeapon;
-    }
-
     public int getCurrentLevel() {
         return this.currentLevel;
     }
@@ -130,10 +119,13 @@ public class Player implements Serializable {
                 ", health=" + health +
                 ", coins=" + coins +
                 ", weapons=" + weapons +
-                ", killed=" + killed +
                 ", experience=" + experience +
                 ", currentLevel=" + currentLevel +
-                ", selectedWeaponIndex=" + selectedWeaponIndex +
+                ", selectedWeapon=" + weapons.get(selectedWeaponIndex).getName() +
                 '}';
+    }
+
+    public void setSelectedWeaponIndex(int selectedWeaponIndex) {
+        this.selectedWeaponIndex = selectedWeaponIndex;
     }
 }

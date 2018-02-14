@@ -22,9 +22,11 @@ public class WeaponParser implements Parser<Weapon> {
 
     private Weapon buildWeapon(String weaponStr) {
         String[] fields = weaponStr.split(DELIMITER);
-        Weapon weapon = new Weapon(fields[NAME], Integer.valueOf(fields[PRICE]),
-                Integer.valueOf(fields[DAMAGE]), Integer.valueOf(fields[DEFENCE]));
-        weapon.setLevel(Integer.valueOf(fields[LEVEL]));
+        Weapon weapon = new Weapon(fields[NAME],
+                Integer.valueOf(fields[PRICE]),
+                Integer.valueOf(fields[DAMAGE]),
+                Integer.valueOf(fields[DEFENCE]),
+                Integer.valueOf(fields[LEVEL]));
         return weapon;
     }
 
