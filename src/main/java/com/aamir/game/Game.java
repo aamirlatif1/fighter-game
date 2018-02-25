@@ -12,7 +12,6 @@ import com.aamir.game.model.Weapon;
 import com.aamir.game.state.*;
 import com.aamir.game.util.*;
 
-import java.io.File;
 import java.util.List;
 import static com.aamir.game.util.Constants.WEAPONS_FILE_PATH;
 

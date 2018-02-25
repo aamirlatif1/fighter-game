@@ -20,14 +20,4 @@ public class NotStartedState implements State {
         logger.debug(" going to start");
     }
 
-
-    @Override
-    public void purchaseWeapon() {
-
-    }
-
-    @Override
-    public void startFight() {
-
-    }
 }
