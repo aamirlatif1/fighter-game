@@ -5,6 +5,8 @@ import com.aamir.game.cli.in.InputReader;
 import com.aamir.game.exception.InsufficientCoinsException;
 import com.aamir.game.exception.WeaponNotAvailableException;
 import com.aamir.game.model.Weapon;
+import com.aamir.game.play.Fight;
+import com.aamir.game.play.Game;
 import org.junit.Before;
 import org.junit.Test;
 

@@ -1,6 +1,6 @@
-package com.aamir.game.state;
+package com.aamir.game.play.state;
 
-import com.aamir.game.Game;
+import com.aamir.game.play.Game;
 import com.aamir.game.cli.out.Logger;
 import com.aamir.game.cli.out.LoggerFactory;
 
@@ -16,7 +16,7 @@ public class NotStartedState implements State {
     @Override
     public void startGame() {
         game.setState(game.getStartedSate());
-        game.getMacroCommand().fillGameStartCommands();
+        game.getMenuManager().fillGameStartCommands();
         logger.debug(" going to start");
     }
 

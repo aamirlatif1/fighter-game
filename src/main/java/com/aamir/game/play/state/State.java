@@ -1,4 +1,4 @@
-package com.aamir.game.state;
+package com.aamir.game.play.state;
 
 import java.io.Serializable;
 

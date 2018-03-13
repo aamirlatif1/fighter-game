@@ -1,8 +1,9 @@
 package com.aamir.game;
 
-import com.aamir.game.state.FightState;
-import com.aamir.game.state.PurchaseWeaponState;
-import com.aamir.game.state.StartedState;
+import com.aamir.game.play.Game;
+import com.aamir.game.play.state.FightState;
+import com.aamir.game.play.state.PurchaseWeaponState;
+import com.aamir.game.play.state.StartedState;
 import com.aamir.game.cli.command.*;
 import com.aamir.game.cli.in.ConsoleReader;
 import com.aamir.game.cli.in.InputReader;
@@ -57,10 +58,10 @@ public class GamePlayTest {
     @Test
     public void gamePlayWithMacroCommand() throws Exception {
         Game game = new Game(inputReader);
-        game.executeCommand(1);
+        game.getMenuManager().executeCommand(1);
         assertThat( game.getState(), CoreMatchers.instanceOf(StartedState.class));
 
-        game.executeCommand(2);
+        game.getMenuManager().executeCommand(2);
         assertThat( game.getState(), CoreMatchers.instanceOf(PurchaseWeaponState.class));
 
     }

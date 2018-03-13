@@ -1,6 +1,6 @@
-package com.aamir.game.state;
+package com.aamir.game.play.state;
 
-import com.aamir.game.Game;
+import com.aamir.game.play.Game;
 
 public class FightState implements State {
 
@@ -13,13 +13,13 @@ public class FightState implements State {
     @Override
     public void startGame() {
         game.setState(game.getStartedSate());
-        game.getMacroCommand().gameStartedCommands();
+        game.getMenuManager().gameStartedCommands();
     }
 
 
     @Override
     public void purchaseWeapon() {
         game.setState(game.getPurchaseWeaponState());
-        game.getMacroCommand().fillWeaponPurchaseCommands();
+        game.getMenuManager().fillWeaponPurchaseCommands();
     }
 }

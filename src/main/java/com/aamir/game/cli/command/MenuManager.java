@@ -1,17 +1,19 @@
 package com.aamir.game.cli.command;
 
-import com.aamir.game.Game;
+import com.aamir.game.play.Game;
 import com.aamir.game.cli.out.Logger;
 import com.aamir.game.cli.out.LoggerFactory;
 import com.aamir.game.model.Weapon;
+import com.aamir.game.util.FileUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MacroCommand {
+public class MenuManager {
 
-    Logger logger = LoggerFactory.getLogger();
-    Game game;
+    private static final Logger LOGGER = LoggerFactory.getLogger();
+
+    private Game game;
     private List<Command> commands = new ArrayList<>();
     private Command loadGameCommand;
     private Command purchaseWeaponStateCommand;
@@ -22,7 +24,7 @@ public class MacroCommand {
     private Command gameStartCommand;
     private Command attackOpponentCommand;
 
-    public MacroCommand(Game game) {
+    public MenuManager(Game game) {
         this.game = game;
         gameStartCommand = new GameStartCommand(game);
         attackOpponentCommand = new AttackOpponentCommand(game);
@@ -32,6 +34,10 @@ public class MacroCommand {
         changeWeaponStateCommand = new ChangeWeaponStateCommand(game);
         loadGameCommand = new LoadGameCommand(game);
         purchaseWeaponStateCommand = new PurchaseWeaponStateCommand(game);
+        if (FileUtil.gameStateFileExist())
+            fillLoadOptions();
+         else
+           fillGameStartCommands();
     }
 
     public void gameStartedCommands(){
@@ -41,7 +47,7 @@ public class MacroCommand {
         commands.add(purchaseWeaponStateCommand);
         commands.add(viewPlayerCommand);
         commands.add(gameExitCommand);
-        logger.debug(" Filled game start with options");
+        LOGGER.debug(" Filled game start with options");
 
     }
 
@@ -49,7 +55,7 @@ public class MacroCommand {
         commands.clear();
         commands.add(gameStartCommand);
         commands.add(gameExitCommand);
-        logger.debug(" Filled game without load");
+        LOGGER.debug(" Filled game without load");
     }
 
     public void fillLoadOptions() {
@@ -57,7 +63,7 @@ public class MacroCommand {
         commands.add(gameStartCommand);
         commands.add(loadGameCommand);
         commands.add(gameExitCommand);
-        logger.debug(" Filled game without load");
+        LOGGER.debug(" Filled game without load");
     }
 
 
@@ -71,7 +77,7 @@ public class MacroCommand {
     public void fillWeaponPurchaseCommands() {
         commands.clear();
         int index = 0;
-        for (Weapon weapon : game.getWeapons())
+        for (Weapon weapon : game.getMetadata().getWeapons())
             if (weapon.getLevel() <= game.getPlayer().getCurrentLevel()
                     && !game.getPlayer().getWeapons().contains(weapon))
                 commands.add(new PurchaseWeaponCommand(game, index++));
@@ -98,4 +104,12 @@ public class MacroCommand {
     public List<Command> getCommands() {
         return commands;
     }
+
+    public void displayCommands(){
+        int i = 1;
+        for (Command command : commands) {
+            LOGGER.log(String.format("%d - %s", i++, command));
+        }
+    }
+
 }

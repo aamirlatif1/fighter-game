@@ -1,6 +1,6 @@
 package com.aamir.game.cli.command;
 
-import com.aamir.game.Game;
+import com.aamir.game.play.Game;
 import com.aamir.game.cli.out.Logger;
 import com.aamir.game.cli.out.LoggerFactory;
 
@@ -17,7 +17,7 @@ public class ChangeWeaponCommand implements Command {
 
     @Override
     public void execute() {
-        game.changeWeapon(weaponIndex);
+        game.getPlayer().setSelectedWeaponIndex(weaponIndex);
         logger.log("Weapon changed.");
     }
 

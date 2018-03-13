@@ -1,13 +1,14 @@
-package com.aamir.game.state;
+package com.aamir.game.play.state;
 
-import com.aamir.game.Game;
+import com.aamir.game.play.Game;
 import com.aamir.game.cli.out.Logger;
 import com.aamir.game.cli.out.LoggerFactory;
 
 public class StartedState implements State {
 
     private Game game;
-    private Logger logger = LoggerFactory.getLogger();
+    private static final Logger LOGGER = LoggerFactory.getLogger();
+
     public StartedState(Game game) {
         this.game = game;
     }
@@ -15,20 +16,20 @@ public class StartedState implements State {
 
     @Override
     public void startGame() {
-        logger.debug("game has been started");
-        game.getMacroCommand().gameStartedCommands();
+        LOGGER.debug("game has been started");
+        game.getMenuManager().gameStartedCommands();
     }
 
     @Override
     public void purchaseWeapon() {
         game.setState(game.getPurchaseWeaponState());
-        game.getMacroCommand().fillWeaponPurchaseCommands();
+        game.getMenuManager().fillWeaponPurchaseCommands();
     }
 
     @Override
     public void startFight() {
         game.setState(game.getFightState());
-        game.getMacroCommand().fillFightCommands();
+        game.getMenuManager().fillFightCommands();
     }
 
 

@@ -1,6 +1,6 @@
 package com.aamir.game.cli.command;
 
-import com.aamir.game.Game;
+import com.aamir.game.play.Game;
 
 public class PurchaseWeaponStateCommand implements Command {
 

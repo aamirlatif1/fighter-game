@@ -3,6 +3,7 @@ package com.aamir.game;
 import com.aamir.game.cli.in.ConsoleReader;
 import com.aamir.game.cli.in.InputReader;
 import com.aamir.game.exception.SystemException;
+import com.aamir.game.play.Game;
 import org.junit.*;
 
 import java.io.File;

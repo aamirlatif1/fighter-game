@@ -1,6 +1,6 @@
 package com.aamir.game.cli.command;
 
-import com.aamir.game.Game;
+import com.aamir.game.play.Game;
 
 public class ChangeWeaponStateCommand implements Command {
 
@@ -13,7 +13,7 @@ public class ChangeWeaponStateCommand implements Command {
     @Override
     public void execute() {
         game.setState(game.getPurchaseWeaponState());
-        game.getMacroCommand().fillChangeWeaponCommands();
+        game.getMenuManager().fillChangeWeaponCommands();
     }
 
     @Override

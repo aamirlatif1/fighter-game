@@ -1,9 +1,12 @@
 package com.aamir.game.cli.command;
 
-import com.aamir.game.Game;
+import com.aamir.game.play.Game;
+import com.aamir.game.cli.out.Logger;
+import com.aamir.game.cli.out.LoggerFactory;
 
 public class ViewPlayerCommand implements Command{
 
+    private static final Logger LOGGER = LoggerFactory.getLogger();
     private Game game;
 
     public ViewPlayerCommand(Game game) {
@@ -12,7 +15,7 @@ public class ViewPlayerCommand implements Command{
 
     @Override
     public void execute() {
-        game.viewPlayer();
+        LOGGER.log(game.getPlayer().toString());
     }
 
     @Override

@@ -1,6 +1,6 @@
 package com.aamir.game.cli.command;
 
-import com.aamir.game.Game;
+import com.aamir.game.play.Game;
 
 public class PurchaseWeaponCommand implements Command {
 
@@ -19,6 +19,6 @@ public class PurchaseWeaponCommand implements Command {
 
     @Override
     public String toString() {
-        return game.getWeapons().get(weaponId).getName();
+        return game.getMetadata().getWeapons().get(weaponId).getName();
     }
 }
