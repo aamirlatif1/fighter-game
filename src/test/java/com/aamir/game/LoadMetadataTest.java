@@ -40,7 +40,7 @@ public class LoadMetadataTest {
     @Test
     public void saveGameStateAndCheckFileExist() throws Exception {
         game.start("Aamir");
-        game.saveGame();
+        game.getPlayer().saveGame();
         File file = new File(System.getProperty("user.home")+GAME_STAE_FILE_PATH);
         assertTrue(file.exists());
     }

@@ -56,7 +56,7 @@ public class GamePlayTest {
     }
 
     @Test
-    public void gamePlayWithMacroCommand() throws Exception {
+    public void gamePlayWithMenuManager() throws Exception {
         Game game = new Game(inputReader);
         game.getMenuManager().executeCommand(1);
         assertThat( game.getState(), CoreMatchers.instanceOf(StartedState.class));

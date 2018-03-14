@@ -2,6 +2,9 @@ package com.aamir.game.model;
 
 
 
+import com.aamir.game.play.Game;
+import com.aamir.game.util.FileUtil;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -127,5 +130,9 @@ public class Player implements Serializable {
 
     public void setSelectedWeaponIndex(int selectedWeaponIndex) {
         this.selectedWeaponIndex = selectedWeaponIndex;
+    }
+
+    public void saveGame() {
+        FileUtil.savePlayer(this);
     }
 }

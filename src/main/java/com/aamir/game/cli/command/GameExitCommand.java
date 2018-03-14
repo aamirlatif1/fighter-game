@@ -18,9 +18,9 @@ public class GameExitCommand implements Command {
         logger.log("Do you want to save game (y/n) : ");
         String decision = game.getInputReader().readString();
         if(decision.equalsIgnoreCase("y")){
-            game.saveGame();
+            game.getPlayer().saveGame();
         }
-        System.exit(1);
+        game.stop();
     }
 
     @Override

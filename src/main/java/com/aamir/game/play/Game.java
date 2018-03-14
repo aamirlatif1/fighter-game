@@ -8,7 +8,6 @@ import com.aamir.game.exception.InsufficientCoinsException;
 import com.aamir.game.model.GameMetadata;
 import com.aamir.game.model.Player;
 import com.aamir.game.model.Weapon;
-import com.aamir.game.play.Fight;
 import com.aamir.game.play.state.*;
 import com.aamir.game.util.*;
 
@@ -27,6 +26,7 @@ public class Game {
     private Fight fight;
     private InputReader inputReader;
     private GameMetadata metadata;
+    public boolean stopped;
 
     public Game(InputReader inputReader) {
         this.inputReader = inputReader;
@@ -120,11 +120,15 @@ public class Game {
         return inputReader;
     }
 
-    public void saveGame() {
-        FileUtil.savePlayer(this.getPlayer());
-    }
-
     public GameMetadata getMetadata() {
         return metadata;
+    }
+
+    public void stop(){
+        stopped = true;
+    }
+
+    public boolean isStopped() {
+        return stopped;
     }
 }

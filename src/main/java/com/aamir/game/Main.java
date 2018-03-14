@@ -17,7 +17,7 @@ public class Main {
         Game game = new Game(inputReader);
         Scanner scanner = new Scanner(System.in);
 
-        while (true){
+        while (!game.isStopped()){
             game.getMenuManager().displayCommands();
             LOGGER.log("Select Option : ");
             int commandIndex = scanner.nextInt();

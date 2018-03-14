@@ -45,8 +45,7 @@ public class MenuManager {
         commands.add(startFightCommand);
         commands.add(changeWeaponStateCommand);
         commands.add(purchaseWeaponStateCommand);
-        commands.add(viewPlayerCommand);
-        commands.add(gameExitCommand);
+        addPlayerCommand();
         LOGGER.debug(" Filled game start with options");
 
     }
@@ -60,8 +59,8 @@ public class MenuManager {
 
     public void fillLoadOptions() {
         commands.clear();
-        commands.add(gameStartCommand);
         commands.add(loadGameCommand);
+        commands.add(gameStartCommand);
         commands.add(gameExitCommand);
         LOGGER.debug(" Filled game without load");
     }
@@ -70,8 +69,7 @@ public class MenuManager {
     public void fillFightCommands() {
         commands.clear();
         commands.add(attackOpponentCommand);
-        commands.add(viewPlayerCommand);
-        commands.add(gameExitCommand);
+        addPlayerCommand();
     }
 
     public void fillWeaponPurchaseCommands() {
@@ -81,9 +79,7 @@ public class MenuManager {
             if (weapon.getLevel() <= game.getPlayer().getCurrentLevel()
                     && !game.getPlayer().getWeapons().contains(weapon))
                 commands.add(new PurchaseWeaponCommand(game, index++));
-        commands.add(startFightCommand);
-        commands.add(viewPlayerCommand);
-        commands.add(gameExitCommand);
+        addFightCommands();
     }
 
     public void fillChangeWeaponCommands() {
@@ -91,18 +87,21 @@ public class MenuManager {
         int index = 0;
         for (Weapon weapon : game.getPlayer().getWeapons())
             commands.add(new ChangeWeaponCommand(game, index++));
+        addFightCommands();
+    }
+
+    private void addFightCommands() {
         commands.add(startFightCommand);
+        addPlayerCommand();
+    }
+
+    private void addPlayerCommand() {
         commands.add(viewPlayerCommand);
         commands.add(gameExitCommand);
     }
 
     public void executeCommand(int index) {
         commands.get(index - 1).execute();
-    }
-
-
-    public List<Command> getCommands() {
-        return commands;
     }
 
     public void displayCommands(){
